@@ -6,16 +6,16 @@
     <Company>Codecamp Sole., LTD</Company>
     <Description>This library is for make developer easy to use HttpClient</Description>
     <PackageTags>httpclient</PackageTags>
-    <PackageReleaseNotes>- Change Dependency namespace of helper</PackageReleaseNotes>
+    <PackageReleaseNotes>- Add Query GraphQL to Client</PackageReleaseNotes>
     <Copyright>Codecamp Lao 2020</Copyright>
-    <PackageProjectUrl>https://github.com/kommalyskb/Helper</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/kommalyskb/Helper</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Codecamplao/HttpClientService</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Codecamplao/HttpClientService</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>
     <PackageId>Codecamp.HttpClientService</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>2.2.3.0</AssemblyVersion>
-    <FileVersion>2.2.3.0</FileVersion>
-    <Version>2.2.3</Version>
+    <AssemblyVersion>2.3.0.0</AssemblyVersion>
+    <FileVersion>2.3.0.0</FileVersion>
+    <Version>2.3.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

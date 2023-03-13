@@ -2899,6 +2899,32 @@ namespace HttpClientService
             }
         }
         #endregion
+
+        #region GraphQL Request
+        public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, double timeout = 100)
+        {
+            var httpClient = httpClientFactory.CreateClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
+            // set header
+            httpClient.DefaultRequestHeaders.Authorization
+                         = new AuthenticationHeaderValue(auth.Type, auth.Value);
+
+            string dataJson = "{\"query\":\"query" + data + "\",\"variables\":{}}";
+            // make request
+            var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync(url, stringContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new HttpResponseWrapper(true, response);
+            }
+            else
+            {
+                return new HttpResponseWrapper(false, response);
+            }
+
+        }
+        #endregion
         private async Task<T> Deserialize<T>(HttpResponseMessage httpResponse)
         {
             try
