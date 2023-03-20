@@ -72,6 +72,9 @@ namespace HttpClientService
         Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100);
         Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, double timeout = 100);
         Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, CancellationToken cancellationToken, double timeout = 100);
+        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, double timeout = 100);
         Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, double timeout = 100);
+        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100);
+        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100);
     }
 }

@@ -2903,16 +2903,79 @@ namespace HttpClientService
         #region GraphQL Request
         public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient();
-            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
+            //var httpClient = httpClientFactory.CreateClient();
+            Client.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            httpClient.DefaultRequestHeaders.Authorization
+            Client.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             string dataJson = "{\"query\":\"query" + data + "\",\"variables\":{}}";
             // make request
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync(url, stringContent);
+            var response = await Client.PostAsync(url, stringContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new HttpResponseWrapper(true, response);
+            }
+            else
+            {
+                return new HttpResponseWrapper(false, response);
+            }
+
+        }
+        public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100)
+        {
+            //var httpClient = httpClientFactory.CreateClient();
+            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            // set header
+            Client.DefaultRequestHeaders.Authorization
+                         = new AuthenticationHeaderValue(auth.Type, auth.Value);
+
+            string dataJson = "{\"query\":\"query" + data + "\",\"variables\":{}}";
+            // make request
+            var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
+            var response = await Client.PostAsync(url, stringContent, cancellationToken);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new HttpResponseWrapper(true, response);
+            }
+            else
+            {
+                return new HttpResponseWrapper(false, response);
+            }
+
+        }
+        public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, double timeout = 100)
+        {
+            //var httpClient = httpClientFactory.CreateClient();
+            Client.Timeout = TimeSpan.FromSeconds(timeout);
+
+            string dataJson = "{\"query\":\"query" + data + "\",\"variables\":{}}";
+            // make request
+            var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
+            var response = await Client.PostAsync(url, stringContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new HttpResponseWrapper(true, response);
+            }
+            else
+            {
+                return new HttpResponseWrapper(false, response);
+            }
+
+        }
+        public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100)
+        {
+            //var httpClient = httpClientFactory.CreateClient();
+            Client.Timeout = TimeSpan.FromSeconds(timeout);
+
+            string dataJson = "{\"query\":\"query" + data + "\",\"variables\":{}}";
+            // make request
+            var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
+            var response = await Client.PostAsync(url, stringContent, cancellationToken);
 
             if (response.IsSuccessStatusCode)
             {
