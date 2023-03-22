@@ -6,16 +6,16 @@
     <Company>Codecamp Sole., LTD</Company>
     <Description>This library is for make developer easy to use HttpClient</Description>
     <PackageTags>httpclient</PackageTags>
-    <PackageReleaseNotes>- Add Query GraphQL to Client</PackageReleaseNotes>
+    <PackageReleaseNotes>- Patch Query GraphQL</PackageReleaseNotes>
     <Copyright>Codecamp Lao 2020</Copyright>
     <PackageProjectUrl>https://github.com/Codecamplao/HttpClientService</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Codecamplao/HttpClientService</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>
     <PackageId>Codecamp.HttpClientService</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>2.3.1.0</AssemblyVersion>
-    <FileVersion>2.3.1.0</FileVersion>
-    <Version>2.3.1</Version>
+    <AssemblyVersion>2.3.2.0</AssemblyVersion>
+    <FileVersion>2.3.2.0</FileVersion>
+    <Version>2.3.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
