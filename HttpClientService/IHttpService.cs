@@ -132,9 +132,9 @@ namespace HttpClientService
         Task<HttpResponseWrapper<object>> Put<T>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100);
         Task<HttpResponseWrapper<object>> Put<T>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100);
         Task<HttpResponseWrapper<object>> Put<T>(string url, T data, string healthCheck, double timeout = 100);
-        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, double timeout = 100);
-        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, double timeout = 100);
-        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100);
-        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100);
+        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, double timeout = 100, string healthCheck = "");
+        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, double timeout = 100, string healthCheck = "");
+        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100, string healthCheck = "");
+        Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100, string healthCheck = "");
     }
 }

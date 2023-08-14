@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -10,8 +12,20 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static void RegisterHttpClientService(this IServiceCollection services)
         {
-            services.AddHttpClient();
-            services.AddSingleton<IHttpService, HttpService>();
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
+                {
+                    return true;
+                }
+            };
+            services
+                .AddHttpClient("codecamp")
+                .ConfigurePrimaryHttpMessageHandler(() =>
+                {
+                    return handler;
+                });
+            services.AddScoped<IHttpService, HttpService>();
         }
     }
 }
