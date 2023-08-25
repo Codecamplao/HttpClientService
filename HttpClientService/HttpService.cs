@@ -26,28 +26,28 @@ namespace HttpClientService
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, double timeout = 100)
         {
             
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -55,7 +55,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -64,10 +64,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
@@ -77,21 +77,21 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -99,7 +99,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -108,27 +108,27 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -136,7 +136,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -145,10 +145,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
@@ -158,21 +158,21 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -180,7 +180,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -190,17 +190,17 @@ namespace HttpClientService
         // Post: with authorization and no response
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -208,14 +208,14 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -224,7 +224,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -232,24 +232,24 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
                 return new HttpResponseWrapper<object>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -257,14 +257,14 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -273,7 +273,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -281,17 +281,17 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -299,14 +299,14 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -315,7 +315,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -323,24 +323,24 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
                 return new HttpResponseWrapper<object>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -348,14 +348,14 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -364,7 +364,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -373,8 +373,8 @@ namespace HttpClientService
         // Post: with normal headers and no response
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
 
@@ -385,7 +385,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -395,7 +395,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -404,7 +404,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -415,17 +415,17 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
@@ -440,7 +440,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -450,7 +450,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -459,7 +459,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -470,15 +470,15 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
 
@@ -489,7 +489,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -499,7 +499,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -508,7 +508,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -519,17 +519,17 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
@@ -544,7 +544,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -554,7 +554,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -563,7 +563,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -574,7 +574,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -583,17 +583,17 @@ namespace HttpClientService
         // Post: with authorization and response object
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -609,7 +609,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -624,7 +624,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -641,7 +641,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -657,24 +657,24 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
                 return new HttpResponseWrapper<TResponse>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -690,7 +690,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -705,7 +705,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -722,7 +722,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -739,17 +739,17 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -765,7 +765,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -780,7 +780,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -797,7 +797,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -813,24 +813,24 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
                 return new HttpResponseWrapper<TResponse>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -846,7 +846,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -861,7 +861,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -878,7 +878,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -895,17 +895,17 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request 
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
                 
                 if (response.IsSuccessStatusCode)
                 {
@@ -922,7 +922,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -938,7 +938,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -956,7 +956,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -974,24 +974,24 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
                 return new HttpResponseWrapper<TResponse, TError>(hcz, default, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request 
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1008,7 +1008,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1024,7 +1024,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1042,7 +1042,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1059,17 +1059,17 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1086,7 +1086,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1102,7 +1102,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1120,7 +1120,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1137,24 +1137,24 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
                 return new HttpResponseWrapper<TResponse, TError>(hcz, default, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1171,7 +1171,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1187,7 +1187,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1205,7 +1205,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1224,8 +1224,8 @@ namespace HttpClientService
         // Post: with noral headers and response object
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
 
@@ -1237,7 +1237,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1255,7 +1255,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1272,7 +1272,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1291,7 +1291,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1307,10 +1307,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -1327,7 +1327,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1345,7 +1345,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1362,7 +1362,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1381,7 +1381,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1398,8 +1398,8 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
 
@@ -1411,7 +1411,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1429,7 +1429,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1446,7 +1446,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1465,7 +1465,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1481,10 +1481,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -1500,7 +1500,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1518,7 +1518,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1535,7 +1535,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1554,7 +1554,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1571,8 +1571,8 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
 
@@ -1584,7 +1584,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1603,7 +1603,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1621,7 +1621,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1641,7 +1641,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1658,10 +1658,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -1677,7 +1677,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1696,7 +1696,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1714,7 +1714,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1734,7 +1734,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1752,8 +1752,8 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
 
@@ -1765,7 +1765,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1784,7 +1784,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1802,7 +1802,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1822,7 +1822,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1839,10 +1839,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -1858,7 +1858,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1877,7 +1877,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1895,7 +1895,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1915,7 +1915,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1934,14 +1934,14 @@ namespace HttpClientService
         // Post: with response object
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1957,7 +1957,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1972,7 +1972,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -1989,7 +1989,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2005,10 +2005,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -2019,7 +2019,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2035,7 +2035,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2050,7 +2050,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2067,7 +2067,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2084,14 +2084,14 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2107,7 +2107,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2122,7 +2122,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2139,7 +2139,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2155,10 +2155,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -2169,7 +2169,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2185,7 +2185,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2200,7 +2200,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2217,7 +2217,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -2234,14 +2234,14 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2258,7 +2258,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2274,7 +2274,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2292,7 +2292,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2309,10 +2309,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -2323,7 +2323,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2340,7 +2340,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2356,7 +2356,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content);
+                var response = await httpClient.PostAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2374,7 +2374,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent);
+                var response = await httpClient.PostAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2392,14 +2392,14 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2416,7 +2416,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2432,7 +2432,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2450,7 +2450,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2467,10 +2467,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -2481,7 +2481,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2498,7 +2498,7 @@ namespace HttpClientService
             {
                 // make request
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2514,7 +2514,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PostAsync(url, content, cancellationToken);
+                var response = await httpClient.PostAsync(url, content, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2532,7 +2532,7 @@ namespace HttpClientService
                 // make request
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -2554,27 +2554,27 @@ namespace HttpClientService
         // Put: normal put with no response
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2582,7 +2582,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2590,10 +2590,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
@@ -2603,21 +2603,21 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2625,7 +2625,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2633,27 +2633,27 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2661,7 +2661,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2669,10 +2669,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
@@ -2682,21 +2682,21 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2704,7 +2704,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2713,30 +2713,30 @@ namespace HttpClientService
         // Put: with authorization and no response
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2744,44 +2744,44 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
                 return new HttpResponseWrapper<object>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2789,37 +2789,37 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content, cancellationToken);
+                var response = await httpClient.PutAsync(url, content, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2827,44 +2827,44 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
                 return new HttpResponseWrapper<object>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content, cancellationToken);
+                var response = await httpClient.PutAsync(url, content, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2872,7 +2872,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2880,8 +2880,8 @@ namespace HttpClientService
         // Put: with normal headers and no response
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
 
@@ -2891,7 +2891,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2900,7 +2900,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2909,7 +2909,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2919,17 +2919,17 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
@@ -2943,7 +2943,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2952,7 +2952,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2961,7 +2961,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2971,15 +2971,15 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
 
@@ -2989,7 +2989,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -2998,7 +2998,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -3007,7 +3007,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -3017,17 +3017,17 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<object>(healthcz);
@@ -3041,7 +3041,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -3050,7 +3050,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -3059,7 +3059,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -3069,7 +3069,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
             }
@@ -3077,17 +3077,17 @@ namespace HttpClientService
         // Put: with authorization and response object
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3102,7 +3102,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3117,7 +3117,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3133,7 +3133,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3150,24 +3150,24 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
                 return new HttpResponseWrapper<TResponse>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3182,7 +3182,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3197,7 +3197,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3213,7 +3213,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3230,17 +3230,17 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3255,7 +3255,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3270,7 +3270,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content, cancellationToken);
+                var response = await httpClient.PutAsync(url, content, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3286,7 +3286,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3303,24 +3303,24 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
                 return new HttpResponseWrapper<TResponse>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3335,7 +3335,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3350,7 +3350,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content, cancellationToken);
+                var response = await httpClient.PutAsync(url, content, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3366,7 +3366,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3384,17 +3384,17 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3410,7 +3410,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3426,7 +3426,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3443,7 +3443,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3461,24 +3461,24 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
                 return new HttpResponseWrapper<TResponse, TError>(hcz, default, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3494,7 +3494,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3510,7 +3510,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3527,7 +3527,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3545,17 +3545,17 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3571,7 +3571,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3587,7 +3587,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content, cancellationToken);
+                var response = await httpClient.PutAsync(url, content, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3604,7 +3604,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3622,24 +3622,24 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
                 return new HttpResponseWrapper<TResponse, TError>(hcz, default, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3655,7 +3655,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3671,7 +3671,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content, cancellationToken);
+                var response = await httpClient.PutAsync(url, content, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3688,7 +3688,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -3707,8 +3707,8 @@ namespace HttpClientService
         // Put: with noral headers and response object
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
 
@@ -3718,7 +3718,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3735,7 +3735,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3752,7 +3752,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3770,7 +3770,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3786,10 +3786,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -3803,7 +3803,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3820,7 +3820,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3837,7 +3837,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3855,7 +3855,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3871,8 +3871,8 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
 
@@ -3882,7 +3882,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3899,7 +3899,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3916,7 +3916,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3934,7 +3934,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3950,10 +3950,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -3967,7 +3967,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -3984,7 +3984,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4001,7 +4001,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4019,7 +4019,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4036,8 +4036,8 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
 
@@ -4047,7 +4047,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4065,7 +4065,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4083,7 +4083,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4102,7 +4102,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4119,10 +4119,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -4136,7 +4136,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4154,7 +4154,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4172,7 +4172,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4191,7 +4191,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4209,8 +4209,8 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
 
@@ -4220,7 +4220,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4238,7 +4238,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4256,7 +4256,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4275,7 +4275,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4292,10 +4292,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, string healthCheck, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -4309,7 +4309,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4327,7 +4327,7 @@ namespace HttpClientService
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4345,7 +4345,7 @@ namespace HttpClientService
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
                 request.Content = content;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4364,7 +4364,7 @@ namespace HttpClientService
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 request.Content = stringContent;
                 request = AddHeder(headers, request);
-                var response = await Client.SendAsync(request, cancellationToken);
+                var response = await httpClient.SendAsync(request, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4383,13 +4383,13 @@ namespace HttpClientService
         // Put: with response object
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4404,7 +4404,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4419,7 +4419,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4435,7 +4435,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4451,10 +4451,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -4464,7 +4464,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4479,7 +4479,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4494,7 +4494,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4510,7 +4510,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4527,13 +4527,13 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4548,7 +4548,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4563,7 +4563,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content, cancellationToken);
+                var response = await httpClient.PutAsync(url, content, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4579,7 +4579,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4595,10 +4595,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -4608,7 +4608,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4623,7 +4623,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4638,7 +4638,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content, cancellationToken);
+                var response = await httpClient.PutAsync(url, content, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4654,7 +4654,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 var resDeserialize = await Deserialize<TResponse>(response);
                 if (response.IsSuccessStatusCode)
@@ -4671,13 +4671,13 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4693,7 +4693,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4709,7 +4709,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4726,7 +4726,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4743,10 +4743,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -4756,7 +4756,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4772,7 +4772,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4788,7 +4788,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content);
+                var response = await httpClient.PutAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4805,7 +4805,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent);
+                var response = await httpClient.PutAsync(url, stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4822,13 +4822,13 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4844,7 +4844,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4860,7 +4860,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content, cancellationToken);
+                var response = await httpClient.PutAsync(url, content, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4877,7 +4877,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4894,10 +4894,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<TResponse>(healthcz);
@@ -4908,7 +4908,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4924,7 +4924,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormUrlEncode)
             {
                 var stringContent = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)data);
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4940,7 +4940,7 @@ namespace HttpClientService
             else if (MediaType == MediaType.FormData)
             {
                 var content = (MultipartFormDataContent)Convert.ChangeType(data, typeof(MultipartFormDataContent));
-                var response = await Client.PutAsync(url, content, cancellationToken);
+                var response = await httpClient.PutAsync(url, content, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4957,7 +4957,7 @@ namespace HttpClientService
             {
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                var response = await Client.PutAsync(url, stringContent, cancellationToken);
+                var response = await httpClient.PutAsync(url, stringContent, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -4978,9 +4978,9 @@ namespace HttpClientService
         // Delete: normal request
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
-            var resHttp = await Client.DeleteAsync(url);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
+            var resHttp = await httpClient.DeleteAsync(url);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -4994,18 +4994,18 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T>(hcz, false, healthcz);
             }
 
-            var resHttp = await Client.DeleteAsync(url);
+            var resHttp = await httpClient.DeleteAsync(url);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5019,9 +5019,9 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
-            var resHttp = await Client.DeleteAsync(url, cancellationToken);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
+            var resHttp = await httpClient.DeleteAsync(url, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5035,18 +5035,18 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T>(hcz, false, healthcz);
             }
 
-            var resHttp = await Client.DeleteAsync(url, cancellationToken);
+            var resHttp = await httpClient.DeleteAsync(url, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5061,13 +5061,13 @@ namespace HttpClientService
         // Delete: with authorization
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.DeleteAsync(url);
+            var resHttp = await httpClient.DeleteAsync(url);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5081,11 +5081,11 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, string healthCheck, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
@@ -5093,10 +5093,10 @@ namespace HttpClientService
             }
 
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.DeleteAsync(url);
+            var resHttp = await httpClient.DeleteAsync(url);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5110,13 +5110,13 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.DeleteAsync(url, cancellationToken);
+            var resHttp = await httpClient.DeleteAsync(url, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5130,20 +5130,20 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.DeleteAsync(url, cancellationToken);
+            var resHttp = await httpClient.DeleteAsync(url, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5158,8 +5158,8 @@ namespace HttpClientService
         // Delete: with normal header
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
 
@@ -5170,7 +5170,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request);
+            var resHttp = await httpClient.SendAsync(request);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5184,10 +5184,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
@@ -5203,7 +5203,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request);
+            var resHttp = await httpClient.SendAsync(request);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5217,8 +5217,8 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
 
@@ -5229,7 +5229,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request, cancellationToken);
+            var resHttp = await httpClient.SendAsync(request, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5243,10 +5243,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
@@ -5261,7 +5261,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request, cancellationToken);
+            var resHttp = await httpClient.SendAsync(request, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5276,9 +5276,9 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
-            var resHttp = await Client.DeleteAsync(url);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
+            var resHttp = await httpClient.DeleteAsync(url);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5292,16 +5292,16 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T, TError>(hcz, default, false, healthcz);
             }
-            var resHttp = await Client.DeleteAsync(url);
+            var resHttp = await httpClient.DeleteAsync(url);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5315,9 +5315,9 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
-            var resHttp = await Client.DeleteAsync(url, cancellationToken);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
+            var resHttp = await httpClient.DeleteAsync(url, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5331,17 +5331,17 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T, TError>(hcz, default, false, healthcz);
             }
 
-            var resHttp = await Client.DeleteAsync(url, cancellationToken);
+            var resHttp = await httpClient.DeleteAsync(url, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5356,13 +5356,13 @@ namespace HttpClientService
         // Delete: with authorization
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.DeleteAsync(url);
+            var resHttp = await httpClient.DeleteAsync(url);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5376,20 +5376,20 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T, TError>(hcz, default, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.DeleteAsync(url);
+            var resHttp = await httpClient.DeleteAsync(url);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5403,13 +5403,13 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.DeleteAsync(url, cancellationToken);
+            var resHttp = await httpClient.DeleteAsync(url, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5423,20 +5423,20 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T, TError>(hcz, default, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.DeleteAsync(url, cancellationToken);
+            var resHttp = await httpClient.DeleteAsync(url, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5451,8 +5451,8 @@ namespace HttpClientService
         // Delete: with normal header
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
 
@@ -5463,7 +5463,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request);
+            var resHttp = await httpClient.SendAsync(request);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5477,10 +5477,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
@@ -5495,7 +5495,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request);
+            var resHttp = await httpClient.SendAsync(request);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5509,8 +5509,8 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
 
@@ -5521,7 +5521,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request, cancellationToken);
+            var resHttp = await httpClient.SendAsync(request, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5535,10 +5535,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
@@ -5553,7 +5553,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request, cancellationToken);
+            var resHttp = await httpClient.SendAsync(request, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5571,10 +5571,10 @@ namespace HttpClientService
         // Get Request: normal request
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // make request
-            var resHttp = await Client.GetAsync(url);
+            var resHttp = await httpClient.GetAsync(url);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5588,17 +5588,17 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T>(hcz, false, healthcz);
             }
             // make request
-            var resHttp = await Client.GetAsync(url);
+            var resHttp = await httpClient.GetAsync(url);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5612,10 +5612,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // make request
-            var resHttp = await Client.GetAsync(url, cancellationToken);
+            var resHttp = await httpClient.GetAsync(url, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5629,17 +5629,17 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T>(hcz, false, healthcz);
             }
             // make request
-            var resHttp = await Client.GetAsync(url, cancellationToken);
+            var resHttp = await httpClient.GetAsync(url, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5654,13 +5654,13 @@ namespace HttpClientService
         // Get Request: with authorization header
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.GetAsync(url);
+            var resHttp = await httpClient.GetAsync(url);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5674,20 +5674,20 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.GetAsync(url);
+            var resHttp = await httpClient.GetAsync(url);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5701,13 +5701,13 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.GetAsync(url, cancellationToken);
+            var resHttp = await httpClient.GetAsync(url, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5721,20 +5721,20 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T>(hcz, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.GetAsync(url, cancellationToken);
+            var resHttp = await httpClient.GetAsync(url, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5749,8 +5749,8 @@ namespace HttpClientService
         // Get Request: with normal header
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -5761,7 +5761,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request);
+            var resHttp = await httpClient.SendAsync(request);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5775,10 +5775,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
@@ -5794,7 +5794,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request);
+            var resHttp = await httpClient.SendAsync(request);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5808,8 +5808,8 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -5820,7 +5820,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request, cancellationToken);
+            var resHttp = await httpClient.SendAsync(request, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5834,10 +5834,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
@@ -5852,7 +5852,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request, cancellationToken);
+            var resHttp = await httpClient.SendAsync(request, cancellationToken);
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -5867,10 +5867,10 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // make request
-            var resHttp = await Client.GetAsync(url);
+            var resHttp = await httpClient.GetAsync(url);
 
             if (resHttp.IsSuccessStatusCode)
             {
@@ -5886,17 +5886,17 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T, TError>(hcz, default, false, healthcz);
             }
             // make request
-            var resHttp = await Client.GetAsync(url);
+            var resHttp = await httpClient.GetAsync(url);
 
             if (resHttp.IsSuccessStatusCode)
             {
@@ -5912,10 +5912,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // make request
-            var resHttp = await Client.GetAsync(url, cancellationToken);
+            var resHttp = await httpClient.GetAsync(url, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5929,17 +5929,17 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T, TError>(hcz, default, false, healthcz);
             }
             // make request
-            var resHttp = await Client.GetAsync(url, cancellationToken);
+            var resHttp = await httpClient.GetAsync(url, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5954,13 +5954,13 @@ namespace HttpClientService
         // Get Request: with authorization header
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, AuthorizeHeader auth, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.GetAsync(url);
+            var resHttp = await httpClient.GetAsync(url);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -5974,20 +5974,20 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T, TError>(hcz, default, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.GetAsync(url);
+            var resHttp = await httpClient.GetAsync(url);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -6001,13 +6001,13 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.GetAsync(url, cancellationToken);
+            var resHttp = await httpClient.GetAsync(url, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -6021,20 +6021,20 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
                 return new HttpResponseWrapper<T, TError>(hcz, default, false, healthcz);
             }
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
             // make request
-            var resHttp = await Client.GetAsync(url, cancellationToken);
+            var resHttp = await httpClient.GetAsync(url, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -6049,8 +6049,8 @@ namespace HttpClientService
         // Get Request: with normal header
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -6061,7 +6061,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request);
+            var resHttp = await httpClient.SendAsync(request);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -6075,10 +6075,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
@@ -6093,7 +6093,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request);
+            var resHttp = await httpClient.SendAsync(request);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -6107,8 +6107,8 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -6119,7 +6119,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request, cancellationToken);
+            var resHttp = await httpClient.SendAsync(request, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -6133,10 +6133,10 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
-            var healthcz = await Client.GetAsync(healthCheck);
+            var healthcz = await httpClient.GetAsync(healthCheck);
             if (!healthcz.IsSuccessStatusCode)
             {
                 var hcz = await ResponseHealthCheck<T>(healthcz);
@@ -6151,7 +6151,7 @@ namespace HttpClientService
             }
 
             // make request
-            var resHttp = await Client.SendAsync(request, cancellationToken);
+            var resHttp = await httpClient.SendAsync(request, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
             {
                 var resDeserialize = await Deserialize<T>(resHttp);
@@ -6168,12 +6168,12 @@ namespace HttpClientService
         #region GraphQL Request
         public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, double timeout = 100, string healthCheck = "")
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (!string.IsNullOrWhiteSpace(healthCheck))
             {
                 // Check healthCheck
-                var healthcz = await Client.GetAsync(healthCheck);
+                var healthcz = await httpClient.GetAsync(healthCheck);
                 if (!healthcz.IsSuccessStatusCode)
                 {
                     return new HttpResponseWrapper(false, healthcz);
@@ -6181,13 +6181,13 @@ namespace HttpClientService
             }
 
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             string dataJson = "{\"query\":\"query" + data + "\",\"variables\":{}}";
             // make request
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-            var response = await Client.PostAsync(url, stringContent);
+            var response = await httpClient.PostAsync(url, stringContent);
             
 
             if (response.IsSuccessStatusCode)
@@ -6202,12 +6202,12 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100, string healthCheck = "")
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (!string.IsNullOrWhiteSpace(healthCheck))
             {
                 // Check healthCheck
-                var healthcz = await Client.GetAsync(healthCheck);
+                var healthcz = await httpClient.GetAsync(healthCheck);
                 if (!healthcz.IsSuccessStatusCode)
                 {
                     return new HttpResponseWrapper(false, healthcz);
@@ -6215,13 +6215,13 @@ namespace HttpClientService
             }
 
             // set header
-            Client.DefaultRequestHeaders.Authorization
+            httpClient.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue(auth.Type, auth.Value);
 
             string dataJson = "{\"query\":\"query" + data + "\",\"variables\":{}}";
             // make request
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-            var response = await Client.PostAsync(url, stringContent, cancellationToken);
+            var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
             if (response.IsSuccessStatusCode)
             {
@@ -6235,12 +6235,12 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, double timeout = 100, string healthCheck = "")
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (!string.IsNullOrWhiteSpace(healthCheck))
             {
                 // Check healthCheck
-                var healthcz = await Client.GetAsync(healthCheck);
+                var healthcz = await httpClient.GetAsync(healthCheck);
                 if (!healthcz.IsSuccessStatusCode)
                 {
                     return new HttpResponseWrapper(false, healthcz);
@@ -6249,7 +6249,7 @@ namespace HttpClientService
             string dataJson = "{\"query\":\"query" + data + "\",\"variables\":{}}";
             // make request
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-            var response = await Client.PostAsync(url, stringContent);
+            var response = await httpClient.PostAsync(url, stringContent);
 
             if (response.IsSuccessStatusCode)
             {
@@ -6263,12 +6263,12 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100, string healthCheck = "")
         {
-            //var httpClient = httpClientFactory.CreateClient();
-            Client.Timeout = TimeSpan.FromSeconds(timeout);
+            var httpClient = httpClientFactory.CreateClient("codecamp");
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (!string.IsNullOrWhiteSpace(healthCheck))
             {
                 // Check healthCheck
-                var healthcz = await Client.GetAsync(healthCheck);
+                var healthcz = await httpClient.GetAsync(healthCheck);
                 if (!healthcz.IsSuccessStatusCode)
                 {
                     return new HttpResponseWrapper(false, healthcz);
@@ -6277,7 +6277,7 @@ namespace HttpClientService
             string dataJson = "{\"query\":\"query" + data + "\",\"variables\":{}}";
             // make request
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-            var response = await Client.PostAsync(url, stringContent, cancellationToken);
+            var response = await httpClient.PostAsync(url, stringContent, cancellationToken);
 
             if (response.IsSuccessStatusCode)
             {

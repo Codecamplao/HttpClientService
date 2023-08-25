@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     return handler;
                 });
-            services.AddScoped<IHttpService, HttpService>();
+            services.AddSingleton<IHttpService, HttpService>();
         }
     }
 }

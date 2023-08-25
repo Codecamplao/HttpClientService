@@ -6,16 +6,16 @@
     <Company>Codecamp Sole., LTD</Company>
     <Description>This library is for make developer easy to use HttpClient</Description>
     <PackageTags>httpclient</PackageTags>
-    <PackageReleaseNotes>- Add invoked for Untrust Certificates</PackageReleaseNotes>
+    <PackageReleaseNotes>- Fix bug create instance for HttpClient</PackageReleaseNotes>
     <Copyright>Codecamp Lao 2020</Copyright>
     <PackageProjectUrl>https://github.com/Codecamplao/HttpClientService</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Codecamplao/HttpClientService</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>
     <PackageId>Codecamp.HttpClientService</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>2.5.1.0</AssemblyVersion>
-    <FileVersion>2.5.1.0</FileVersion>
-    <Version>2.5.1</Version>
+    <AssemblyVersion>2.5.3.0</AssemblyVersion>
+    <FileVersion>2.5.3.0</FileVersion>
+    <Version>2.5.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
