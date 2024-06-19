@@ -14,9 +14,12 @@ namespace WebDemo.Pages
                 //var result = await httpService.QueryGraphQLAsync("http://localhost:5223/graphql", data, 100);
 
                 //var pc = await result.GetData<dynamic>("listBranches");
-                var result = await httpService.Get<CommponResponse>("https://wallet.local:7067/api/WalletService/GetWallet/123");
-                Console.WriteLine(result.Success);
-                Console.WriteLine(JsonSerializer.Serialize(result.Response));
+                var result = await httpService.Get<List<WeatherDTO>>("https://freetestapi.com/api/v1/movies?limit=5");
+                Console.WriteLine($"abc {result.Success}");
+                //Console.WriteLine(JsonSerializer.Serialize(result.Response));
+                var result2 = await httpService.Get<List<WeatherDTO>>("https://freetestapi.com/api/v1/movies?limit=10");
+                Console.WriteLine($"def {result2.Success}");
+                //Console.WriteLine(JsonSerializer.Serialize(result2.Response));
             }
             catch (Exception)
             {
@@ -24,6 +27,27 @@ namespace WebDemo.Pages
 
             }
         }
+    }
+
+    public class WeatherDTO
+    {
+        public int id { get; set; }
+        public string title { get; set; }
+        public int year { get; set; }
+        public string[] genre { get; set; }
+        public float rating { get; set; }
+        public string director { get; set; }
+        public string[] actors { get; set; }
+        public string plot { get; set; }
+        public string poster { get; set; }
+        public string trailer { get; set; }
+        public int runtime { get; set; }
+        public string awards { get; set; }
+        public string country { get; set; }
+        public string language { get; set; }
+        public string boxOffice { get; set; }
+        public string production { get; set; }
+        public string website { get; set; }
     }
 
 

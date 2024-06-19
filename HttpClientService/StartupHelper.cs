@@ -1,10 +1,5 @@
 ﻿using HttpClientService;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -26,6 +21,22 @@ namespace Microsoft.Extensions.DependencyInjection
                     return handler;
                 });
             services.AddSingleton<IHttpService, HttpService>();
+            //services.AddSingleton<ClientNameResolver>(sp => ClientNameResolverFactory.CreateClientNameResolver(clientName));
         }
     }
+    //public class ClientNameResolver
+    //{
+    //    public string Name { get; set; }
+    //    public ClientNameResolver(string name)
+    //    {
+    //        Name = name;
+    //    }
+    //}
+    //public class ClientNameResolverFactory
+    //{
+    //    public static ClientNameResolver CreateClientNameResolver(string name)
+    //    {
+    //        return new ClientNameResolver(name);
+    //    }
+    //}
 }

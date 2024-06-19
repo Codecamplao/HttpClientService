@@ -6,27 +6,30 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Threading;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HttpClientService
 {
-    public class HttpService: IHttpService
+    public class HttpService : IHttpService
     {
         //private readonly HttpClient httpClient;
         private readonly IHttpClientFactory httpClientFactory;
+
         public HttpClient Client { get; set; }
         public MediaType MediaType { get; set; }
         // Update -- Remove Dependency Injection for constructor
         public HttpService(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = httpClientFactory;
-            Client = httpClientFactory.CreateClient("codecamp");
+            Client = httpClientFactory.CreateClient("codecamp"); Client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); Client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
         }
         #region Post request
         // Post: normal post with no response
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, double timeout = 100)
         {
-            
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
+
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             if (MediaType == MediaType.JSON)
@@ -64,7 +67,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -108,7 +111,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -145,7 +148,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -190,7 +193,7 @@ namespace HttpClientService
         // Post: with authorization and no response
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -232,7 +235,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -281,7 +284,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -323,7 +326,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -373,7 +376,7 @@ namespace HttpClientService
         // Post: with normal headers and no response
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
@@ -422,7 +425,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -477,7 +480,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
@@ -526,7 +529,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -583,7 +586,7 @@ namespace HttpClientService
         // Post: with authorization and response object
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -657,7 +660,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -739,7 +742,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -813,7 +816,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -895,7 +898,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -906,7 +909,7 @@ namespace HttpClientService
                 var dataJson = JsonConvert.SerializeObject(data);
                 var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(url, stringContent);
-                
+
                 if (response.IsSuccessStatusCode)
                 {
                     var resDeserialize = await Deserialize<TResponse>(response);
@@ -974,7 +977,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -1059,7 +1062,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -1137,7 +1140,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -1224,7 +1227,7 @@ namespace HttpClientService
         // Post: with noral headers and response object
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
@@ -1307,7 +1310,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -1398,7 +1401,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
@@ -1481,7 +1484,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -1571,7 +1574,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
@@ -1658,7 +1661,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -1752,7 +1755,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
@@ -1839,7 +1842,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -1934,7 +1937,7 @@ namespace HttpClientService
         // Post: with response object
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -2005,7 +2008,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -2084,7 +2087,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -2155,7 +2158,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -2234,7 +2237,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -2309,7 +2312,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -2392,7 +2395,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -2467,7 +2470,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Post<T, TResponse, TError>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -2554,7 +2557,7 @@ namespace HttpClientService
         // Put: normal put with no response
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -2590,7 +2593,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -2633,7 +2636,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -2669,7 +2672,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -2713,7 +2716,7 @@ namespace HttpClientService
         // Put: with authorization and no response
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -2751,7 +2754,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -2796,7 +2799,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -2834,7 +2837,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -2880,7 +2883,7 @@ namespace HttpClientService
         // Put: with normal headers and no response
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
@@ -2926,7 +2929,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -2978,7 +2981,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
@@ -3024,7 +3027,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -3077,7 +3080,7 @@ namespace HttpClientService
         // Put: with authorization and response object
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -3150,7 +3153,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -3230,7 +3233,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -3303,7 +3306,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -3384,7 +3387,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -3461,7 +3464,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -3545,7 +3548,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -3622,7 +3625,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -3707,7 +3710,7 @@ namespace HttpClientService
         // Put: with noral headers and response object
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
@@ -3786,7 +3789,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -3871,7 +3874,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
@@ -3950,7 +3953,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -4036,7 +4039,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
@@ -4119,7 +4122,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -4209,7 +4212,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Put, url);
@@ -4292,7 +4295,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, string healthCheck, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -4383,7 +4386,7 @@ namespace HttpClientService
         // Put: with response object
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -4451,7 +4454,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -4527,7 +4530,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -4595,7 +4598,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -4671,7 +4674,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -4743,7 +4746,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -4822,7 +4825,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (MediaType == MediaType.JSON)
             {
@@ -4894,7 +4897,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<TResponse, TError>> Put<T, TResponse, TError>(string url, T data, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -4978,7 +4981,7 @@ namespace HttpClientService
         // Delete: normal request
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             var resHttp = await httpClient.DeleteAsync(url);
             var response = await Deserialize<T>(resHttp);
@@ -4994,7 +4997,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             // Check healthCheck
@@ -5019,7 +5022,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             var resHttp = await httpClient.DeleteAsync(url, cancellationToken);
             var response = await Deserialize<T>(resHttp);
@@ -5035,7 +5038,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             // Check healthCheck
@@ -5061,7 +5064,7 @@ namespace HttpClientService
         // Delete: with authorization
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -5081,7 +5084,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, string healthCheck, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             // Check healthCheck
@@ -5110,7 +5113,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -5130,7 +5133,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5158,7 +5161,7 @@ namespace HttpClientService
         // Delete: with normal header
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
@@ -5184,7 +5187,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5217,7 +5220,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
@@ -5243,7 +5246,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Delete<T>(string url, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5276,7 +5279,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             var resHttp = await httpClient.DeleteAsync(url);
             if (resHttp.IsSuccessStatusCode)
@@ -5292,7 +5295,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5315,7 +5318,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             var resHttp = await httpClient.DeleteAsync(url, cancellationToken);
             if (resHttp.IsSuccessStatusCode)
@@ -5331,7 +5334,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5356,7 +5359,7 @@ namespace HttpClientService
         // Delete: with authorization
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -5376,7 +5379,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5403,7 +5406,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -5423,7 +5426,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5451,7 +5454,7 @@ namespace HttpClientService
         // Delete: with normal header
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
@@ -5477,7 +5480,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5509,7 +5512,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
@@ -5535,7 +5538,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Delete<T, TError>(string url, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5571,7 +5574,8 @@ namespace HttpClientService
         // Get Request: normal request
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // make request
             var resHttp = await httpClient.GetAsync(url);
@@ -5588,7 +5592,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5612,7 +5616,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // make request
             var resHttp = await httpClient.GetAsync(url, cancellationToken);
@@ -5629,7 +5633,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5654,7 +5658,7 @@ namespace HttpClientService
         // Get Request: with authorization header
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -5674,7 +5678,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5701,7 +5705,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -5721,7 +5725,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5749,7 +5753,7 @@ namespace HttpClientService
         // Get Request: with normal header
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -5775,7 +5779,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5808,7 +5812,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -5834,7 +5838,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5867,7 +5871,7 @@ namespace HttpClientService
 
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // make request
             var resHttp = await httpClient.GetAsync(url);
@@ -5882,11 +5886,11 @@ namespace HttpClientService
                 var resDeserialize = await Deserialize<TError>(resHttp);
                 return new HttpResponseWrapper<T, TError>(default, resDeserialize, false, resHttp);
             }
-            
+
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5912,7 +5916,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // make request
             var resHttp = await httpClient.GetAsync(url, cancellationToken);
@@ -5929,7 +5933,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -5954,7 +5958,7 @@ namespace HttpClientService
         // Get Request: with authorization header
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, AuthorizeHeader auth, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -5974,7 +5978,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, AuthorizeHeader auth, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -6001,7 +6005,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, AuthorizeHeader auth, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // set header
             httpClient.DefaultRequestHeaders.Authorization
@@ -6021,7 +6025,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, AuthorizeHeader auth, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -6049,7 +6053,7 @@ namespace HttpClientService
         // Get Request: with normal header
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, List<HttpHeaderWrapper> headers, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -6075,7 +6079,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, List<HttpHeaderWrapper> headers, string healthCheck, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -6107,7 +6111,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, List<HttpHeaderWrapper> headers, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -6133,7 +6137,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper<T, TError>> Get<T, TError>(string url, List<HttpHeaderWrapper> headers, string healthCheck, CancellationToken cancellationToken, double timeout = 100)
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // Check healthCheck
             var healthcz = await httpClient.GetAsync(healthCheck);
@@ -6168,7 +6172,7 @@ namespace HttpClientService
         #region GraphQL Request
         public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, double timeout = 100, string healthCheck = "")
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (!string.IsNullOrWhiteSpace(healthCheck))
             {
@@ -6188,7 +6192,7 @@ namespace HttpClientService
             // make request
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(url, stringContent);
-            
+
 
             if (response.IsSuccessStatusCode)
             {
@@ -6202,7 +6206,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, AuthorizeHeader auth, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100, string healthCheck = "")
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (!string.IsNullOrWhiteSpace(healthCheck))
             {
@@ -6235,7 +6239,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, double timeout = 100, string healthCheck = "")
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (!string.IsNullOrWhiteSpace(healthCheck))
             {
@@ -6263,7 +6267,7 @@ namespace HttpClientService
         }
         public async Task<HttpResponseWrapper> QueryGraphQLAsync(string url, string data, CancellationToken cancellationToken = default(CancellationToken), double timeout = 100, string healthCheck = "")
         {
-            var httpClient = httpClientFactory.CreateClient("codecamp");
+            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             if (!string.IsNullOrWhiteSpace(healthCheck))
             {
@@ -6311,7 +6315,7 @@ namespace HttpClientService
             {
                 return default(T);
             }
-           
+
         }
 
         private async Task<T> ResponseHealthCheck<T>(HttpResponseMessage httpResponse)
@@ -6331,7 +6335,7 @@ namespace HttpClientService
             }
 
         }
-        
+
         private HttpRequestMessage AddHeder(List<HttpHeaderWrapper> headers, HttpRequestMessage request)
         {
             // set header
