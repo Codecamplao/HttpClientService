@@ -6,16 +6,16 @@
 		<Company>Codecamp Sole., LTD</Company>
 		<Description>This library is for make developer easy to use HttpClient</Description>
 		<PackageTags>httpclient</PackageTags>
-		<PackageReleaseNotes>- Add accept compression for gzip and br</PackageReleaseNotes>
+		<PackageReleaseNotes>- Fix bug compression</PackageReleaseNotes>
 		<Copyright>Codecamp Lao 2020</Copyright>
 		<PackageProjectUrl>https://github.com/Codecamplao/HttpClientService</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Codecamplao/HttpClientService</RepositoryUrl>
 		<RepositoryType>C#</RepositoryType>
 		<PackageId>Codecamp.HttpClientService</PackageId>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<AssemblyVersion>2.5.5.0</AssemblyVersion>
-		<FileVersion>2.5.5.0</FileVersion>
-		<Version>2.5.5</Version>
+		<AssemblyVersion>2.5.6.0</AssemblyVersion>
+		<FileVersion>2.5.6.0</FileVersion>
+		<Version>2.5.6</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -23,6 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="BrotliSharpLib" Version="0.3.3" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Text.Json" Version="6.0.8" />

@@ -16,10 +16,10 @@ namespace WebDemo.Pages
                 //var pc = await result.GetData<dynamic>("listBranches");
                 var result = await httpService.Get<List<WeatherDTO>>("https://freetestapi.com/api/v1/movies?limit=5");
                 Console.WriteLine($"abc {result.Success}");
-                //Console.WriteLine(JsonSerializer.Serialize(result.Response));
+                Console.WriteLine(JsonSerializer.Serialize(result.Response));
                 var result2 = await httpService.Get<List<WeatherDTO>>("https://freetestapi.com/api/v1/movies?limit=10");
                 Console.WriteLine($"def {result2.Success}");
-                //Console.WriteLine(JsonSerializer.Serialize(result2.Response));
+                Console.WriteLine(JsonSerializer.Serialize(result2.Response));
             }
             catch (Exception)
             {

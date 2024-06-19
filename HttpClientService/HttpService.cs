@@ -7,6 +7,11 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
+using System.IO.Compression;
+using System.IO;
+using System.Linq;
+using BrotliSharpLib;
 
 namespace HttpClientService
 {
@@ -5574,11 +5579,13 @@ namespace HttpClientService
         // Get Request: normal request
         public async Task<HttpResponseWrapper<T>> Get<T>(string url, double timeout = 100)
         {
+            
+            var httpClient = httpClientFactory.CreateClient("codecamp");httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
 
-            var httpClient = httpClientFactory.CreateClient("codecamp"); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
             httpClient.Timeout = TimeSpan.FromSeconds(timeout);
             // make request
             var resHttp = await httpClient.GetAsync(url);
+
             var response = await Deserialize<T>(resHttp);
 
             if (resHttp.IsSuccessStatusCode)
@@ -6299,6 +6306,38 @@ namespace HttpClientService
             try
             {
                 var responseString = await httpResponse.Content.ReadAsStringAsync();
+
+                // Check the Content-Encoding header
+                if (httpResponse.Content.Headers.ContentEncoding.Any(x => x.Equals("gzip", StringComparison.OrdinalIgnoreCase)))
+                {
+                    // Decompress the response using GZip
+                    using (var decompressedStream = new MemoryStream())
+                    {
+                        using (var gzipStream = new GZipStream(await httpResponse.Content.ReadAsStreamAsync(), CompressionMode.Decompress))
+                        {
+                            await gzipStream.CopyToAsync(decompressedStream);
+                        }
+                        responseString = Encoding.UTF8.GetString(decompressedStream.ToArray());
+                        // Process the decompressed response
+                        //Console.WriteLine(responseString);
+                    }
+                }
+                else if (httpResponse.Content.Headers.ContentEncoding.Any(x => x.Equals("br", StringComparison.OrdinalIgnoreCase)))
+                {
+                    // Decompress the response using Brotli
+                    using (var decompressedStream = new MemoryStream())
+                    {
+                        using (var brotliStream = new BrotliStream(await httpResponse.Content.ReadAsStreamAsync(), CompressionMode.Decompress))
+                        {
+                            await brotliStream.CopyToAsync(decompressedStream);
+                        }
+                        responseString = Encoding.UTF8.GetString(decompressedStream.ToArray());
+                        // Process the decompressed response
+                        //Console.WriteLine(responseString);
+                    }
+                }
+               
+
                 if (typeof(T) == typeof(string) || typeof(T) == typeof(int) ||
                     typeof(T) == typeof(bool) || typeof(T) == typeof(decimal))
                 {

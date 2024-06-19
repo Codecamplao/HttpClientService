@@ -1,10 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using BrotliSharpLib;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace HttpClientService
 {
@@ -89,7 +93,37 @@ namespace HttpClientService
         }
         public async Task<string> GetBody()
         {
-            return await HttpResponseMessage.Content.ReadAsStringAsync();
+            var responseString = await HttpResponseMessage.Content.ReadAsStringAsync();
+            // Check the Content-Encoding header
+            if (HttpResponseMessage.Content.Headers.ContentEncoding.Any(x => x.Equals("gzip", StringComparison.OrdinalIgnoreCase)))
+            {
+                // Decompress the response using GZip
+                using (var decompressedStream = new MemoryStream())
+                {
+                    using (var gzipStream = new GZipStream(await HttpResponseMessage.Content.ReadAsStreamAsync(), CompressionMode.Decompress))
+                    {
+                        await gzipStream.CopyToAsync(decompressedStream);
+                    }
+                    responseString = Encoding.UTF8.GetString(decompressedStream.ToArray());
+                    // Process the decompressed response
+                    //Console.WriteLine(responseString);
+                }
+            }
+            else if (HttpResponseMessage.Content.Headers.ContentEncoding.Any(x => x.Equals("br", StringComparison.OrdinalIgnoreCase)))
+            {
+                // Decompress the response using Brotli
+                using (var decompressedStream = new MemoryStream())
+                {
+                    using (var brotliStream = new BrotliStream(await HttpResponseMessage.Content.ReadAsStreamAsync(), CompressionMode.Decompress))
+                    {
+                        await brotliStream.CopyToAsync(decompressedStream);
+                    }
+                    responseString = Encoding.UTF8.GetString(decompressedStream.ToArray());
+                    // Process the decompressed response
+                    //Console.WriteLine(responseString);
+                }
+            }
+            return responseString;
         }
         
     }
