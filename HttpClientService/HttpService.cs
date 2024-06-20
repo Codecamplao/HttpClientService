@@ -26,7 +26,9 @@ namespace HttpClientService
         public HttpService(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = httpClientFactory;
-            Client = httpClientFactory.CreateClient("codecamp"); Client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); Client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
+            Client = httpClientFactory.CreateClient("codecamp"); 
+            //Client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip")); 
+            //Client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
         }
         #region Post request
         // Post: normal post with no response
